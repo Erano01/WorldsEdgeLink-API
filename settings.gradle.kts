@@ -1,1 +1,1 @@
-rootProject.name = "RLinkAPI"
+rootProject.name = "WorldsEdgeLink-API"

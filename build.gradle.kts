@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "com.welivecoach.aoe3"
+group = "me.erano.com.aoe3"
 version = "1.0-SNAPSHOT"
 
 java {
