@@ -28,6 +28,8 @@ The current implementation is:
 - **Bounded parallelism within a game.** A fixed thread pool (size 6) processes leaderboards concurrently, but each leaderboard's own pagination stays sequential.
 - **Rate-limited.** A semaphore plus a fixed delay keep requests well under the external API's limits.
 
+A full sync of all four games with this strategy takes roughly 10-13 minutes.
+
 ### Why not go faster?
 
 `aoe-api.worldsedgelink.com` is an unofficial, community-reverse-engineered API (see [librematch](https://github.com/librematch)). It is not provisioned for high-throughput third-party traffic, and every request competes for the same limited rate budget the whole community relies on.
@@ -38,4 +40,6 @@ The slower design is a deliberate trade-off. Throughput is sacrificed for the lo
 
 ### Faster implementation
 
-A significantly faster, consistent concurrency approach, approaching the mathematical limits of throughput for this workload, has been developed and tested. It is kept private and is not part of this public repository, to avoid enabling higher-volume traffic against the unofficial upstream API.
+Given current data volume and the external API's rate limit, roughly 2-3 minutes is the theoretical lower bound for syncing all four games, even if data consistency guarantees were dropped entirely. Rate limiting alone prevents going faster than that.
+
+A private implementation reaches this bound in practice: a full sync of AoE1, AoE2, AoE3, and AoE4 completes in 2.5-3 minutes. It also extends support to Age of Mythology, which is not yet part of this public repository. This solution is kept private to avoid enabling higher-volume traffic against the unofficial upstream API.
